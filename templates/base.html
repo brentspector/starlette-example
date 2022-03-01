@@ -63,5 +63,13 @@
     <script src="{{ url_for('static', path='/js/jquery-3.3.1.slim.min.js') }}"></script>
     <script src="{{ url_for('static', path='/js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', path='/js/bootstrap.min.js') }}"></script>
+    <script>
+      // Make sure this is *before* you load the count.js script; otherwise
+      // the pageview may get sent before this is loaded and this will just
+      // overwrite the object.
+      window.goatcounter = { allow_local: true }
+    </script>
+    <script data-goatcounter="https://goatcounter-nz5u.onrender.com/count"
+    async src="//goatcounter-nz5u.onrender.com/count.js"></script>
   </body>
 </html>

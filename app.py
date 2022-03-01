@@ -2,6 +2,9 @@ from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
 from starlette.responses import HTMLResponse
 from starlette.templating import Jinja2Templates
+from filestorage import store
+from filestorage.filters import RandomizeFilename
+from filestorage.handlers import AsyncLocalFileHandler
 import uvicorn
 
 
@@ -45,6 +48,20 @@ async def server_error(request, exc):
     context = {"request": request}
     return templates.TemplateResponse(template, context, status_code=500)
 
+@app.route('/upload', methods=['GET', 'POST'])
+async def uploader(request):
+    template = "file_upload.html"
+    context = {"request": request}
+    if request.method == 'GET':
+        return templates.TemplateResponse(template, context)
+    form = await request.form()
+    context['uploaded_filename'] = await store.async_save_field(form['file'])
+    return templates.TemplateResponse(template, context)
+
 
 if __name__ == "__main__":
+    store.handler = AsyncLocalFileHandler(
+        base_path='uploads', filters=[RandomizeFilename()], auto_make_dir=True,
+    )
+    store.finalize_config()
     uvicorn.run(app, host='0.0.0.0', port=8000)

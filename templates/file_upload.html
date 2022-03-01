@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <form action="upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <br>
+                <input type="submit" />
+            </form>
+            <div>
+                {{ uploaded_filename }}
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

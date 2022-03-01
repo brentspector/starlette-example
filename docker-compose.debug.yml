@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  starletteexample:
+    image: starletteexample
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["sh", "-c", "pip install debugpy && python -m debugpy --listen 0.0.0.0:5678 app.py"]
+    ports:
+      - 8000:8000
+      - 5678:5678

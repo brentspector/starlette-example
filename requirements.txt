@@ -1,4 +1,5 @@
 aiofiles
 jinja2
-starlette
+starlette[full]
 uvicorn
+filestorage[aio_file]
